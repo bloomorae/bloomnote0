@@ -109,7 +109,7 @@
         const stage = document.createElement("div");
         stage.style.position = "relative";
         stage.style.width = "100%";
-        stage.style.maxWidth = `${Math.min(cw, 700)}px`;
+        stage.style.maxWidth = `${cw}px`;
         stage.style.aspectRatio = `${cw} / ${ch}`;
         stage.style.margin = "0 auto";
         stage.style.overflow = "hidden";
@@ -173,16 +173,16 @@
             stage.appendChild(pieceEl);
         });
 
-        container.appendChild(stage);
-
         const note = document.createElement("div");
         note.className = "attached-note";
+        note.style.zIndex = "6000";
 
         const noteP = document.createElement("p");
         noteP.textContent = recipe.m || "A little happiness, just for you.";
         note.appendChild(noteP);
 
-        container.appendChild(note);
+        stage.appendChild(note);
+        container.appendChild(stage);
     }
 
     global.BloomShare = {
