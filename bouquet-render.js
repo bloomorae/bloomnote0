@@ -190,7 +190,7 @@
             pieceEl.style.width = `${size}px`;
             pieceEl.style.height = `${size}px`;
             pieceEl.style.transform = `translate(-50%, -50%) rotate(${Number(rot) || 0}deg)`;
-            pieceEl.style.zIndex = String(10 + index);
+            pieceEl.style.zIndex = "2";
             pieceEl.style.pointerEvents = "none";
 
             const img = document.createElement("img");
