@@ -1,6 +1,11 @@
+
 const finalBouquet = document.getElementById("final-bouquet");
 const generateButton = document.getElementById("generate-link-button");
 const linkStatus = document.getElementById("link-status");
+
+// Supabase connection
+const SUPABASE_URL = "https://ylvfmigmzrcprwjaoqpl.supabase.co";
+const SUPABASE_KEY = "sb_publishable_H-0bF574pTWFGa6HSKiRbw_nXtONOpf";
 
 // Get the saved bouquet and selected message
 const savedBouquet = sessionStorage.getItem(
@@ -207,7 +212,7 @@ function roundTo(value, digits) {
     return Math.round(Number(value) * factor) / factor;
 }
 
-// Turns the finished bouquet into a small "recipe" that fits inside a link
+// Turns the finished bouquet into a recipe
 function buildShareRecipe() {
     const pieces = readSavedJson("bloomnoteArrangement", []);
     const wrapperState = readSavedJson("bloomnoteWrapper", null);
@@ -276,14 +281,60 @@ function buildShareRecipe() {
     };
 }
 
-// Generate Link
-generateButton.addEventListener("click", async () => {
-    if (typeof BloomShare === "undefined") {
-        linkStatus.textContent =
-            "The sharing file is missing. Please upload bouquet-render.js ♡";
-        return;
+// Generate a short unique ID
+function generateBouquetId() {
+    const characters =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    const randomValues = new Uint8Array(10);
+    crypto.getRandomValues(randomValues);
+
+    return Array.from(
+        randomValues,
+        value => characters[value % characters.length]
+    ).join("");
+}
+
+// Save bouquet to Supabase and return its ID
+async function saveBouquet(recipe) {
+    for (let attempt = 0; attempt < 3; attempt++) {
+        const id = generateBouquetId();
+
+        const response = await fetch(
+            `${SUPABASE_URL}/rest/v1/bouquets`,
+            {
+                method: "POST",
+                headers: {
+                    "apikey": SUPABASE_KEY,
+                    "Authorization": `Bearer ${SUPABASE_KEY}`,
+                    "Content-Type": "application/json",
+                    "Prefer": "return=minimal"
+                },
+                body: JSON.stringify({
+                    id: id,
+                    recipe: recipe
+                })
+            }
+        );
+
+        if (response.ok) {
+            return id;
+        }
+
+        // Retry if the randomly generated ID already exists
+        if (response.status === 409) {
+            continue;
+        }
+
+        const errorText = await response.text();
+        throw new Error(errorText || "Could not save bouquet.");
     }
 
+    throw new Error("Could not generate a unique bouquet ID.");
+}
+
+// Generate Link
+generateButton.addEventListener("click", async () => {
     const recipe = buildShareRecipe();
 
     if (!recipe) {
@@ -293,12 +344,14 @@ generateButton.addEventListener("click", async () => {
     }
 
     generateButton.disabled = true;
+    linkStatus.textContent = "Saving your bouquet... ♡";
 
     try {
-        const code = await BloomShare.encode(recipe);
+        const id = await saveBouquet(recipe);
 
         const base = new URL("view.html", window.location.href).href;
-        const url = base.split("?")[0].split("#")[0] + "?b=" + code;
+        const url = base.split("?")[0].split("#")[0] +
+            "?id=" + encodeURIComponent(id);
 
         shareLinkInput.value = url;
         linkBox.hidden = false;
@@ -307,7 +360,9 @@ generateButton.addEventListener("click", async () => {
             "https://wa.me/?text=" +
             encodeURIComponent("I made you a little bouquet ♡ " + url);
 
-        if (navigator.share) shareNativeButton.hidden = false;
+        if (navigator.share) {
+            shareNativeButton.hidden = false;
+        }
 
         if (window.location.protocol === "file:") {
             shareLocalWarning.hidden = false;
@@ -318,9 +373,12 @@ generateButton.addEventListener("click", async () => {
 
         shareLinkInput.focus();
         shareLinkInput.select();
+
     } catch (error) {
+        console.error("Bouquet saving error:", error);
+
         linkStatus.textContent =
-            "Something went wrong. Please try again ♡";
+            "Couldn't save your bouquet. Please check your Supabase permissions and try again ♡";
     }
 
     generateButton.disabled = false;
