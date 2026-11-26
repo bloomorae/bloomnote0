@@ -95,8 +95,8 @@
 
     function fitSnapshot(container, frame, scene, width, height, offsetX, offsetY) {
         const maxHeight = 520;
-        const available = Math.max(container.clientWidth - 50, 260);
-        let scale = Math.min(available / width, maxHeight / height, 1.6);
+        const available = Math.max(container.clientWidth - 52, 240);
+        const scale = Math.min(available / width, maxHeight / height, 1.6);
 
         frame.style.width = `${width * scale}px`;
         frame.style.height = `${height * scale}px`;
@@ -209,7 +209,7 @@
             scene.appendChild(pieceEl);
         });
 
-        const pad = 24;
+        const pad = 12;
         const offsetX = Number.isFinite(minX) ? Math.max(0, minX - pad) : 0;
         const offsetY = Number.isFinite(minY) ? Math.max(0, minY - pad) : 0;
         const cropW = Number.isFinite(maxX) ? Math.min(cw - offsetX, maxX - offsetX + pad) : cw;
