@@ -1,4 +1,3 @@
-
 * {
     box-sizing: border-box;
 }
@@ -60,7 +59,8 @@ body {
     font-size: 14px;
 }
 
-.final-bouquet {
+.final-bouquet,
+#shared-bouquet-display {
     position: relative;
     width: 100%;
     min-height: 560px;
@@ -81,7 +81,8 @@ body {
     background-size: 13px 13px;
 }
 
-.final-bouquet .bq-snapshot {
+.final-bouquet .bq-snapshot,
+#shared-bouquet-display .bq-snapshot {
     flex-shrink: 0;
     max-width: none;
 }
@@ -92,7 +93,8 @@ body {
 }
 
 /* Keep the attached note styled like the message page */
-.final-bouquet .attached-note {
+.final-bouquet .attached-note,
+#shared-bouquet-display .attached-note {
     z-index: 10;
 }
 
@@ -156,7 +158,8 @@ body {
         padding: 30px 15px;
     }
 
-    .final-bouquet {
+    .final-bouquet,
+    #shared-bouquet-display {
         min-height: 400px;
         padding: 10px;
     }
