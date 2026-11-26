@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -79,25 +80,56 @@
     <script src="arrangement.js"></script>
     <script src="bouquet-render.js"></script>
     <script>
-        (function () {
+        (async function () {
             const target = document.getElementById("shared-bouquet-display");
-            const params = new URLSearchParams(window.location.search);
-            const code = params.get("b");
 
-            if (!code || typeof BloomShare === "undefined") {
+            const SUPABASE_URL =
+                "https://ylvfmigmzrcprwjaoqpl.supabase.co";
+
+            const SUPABASE_KEY =
+                "sb_publishable_H-0bF574pTWFGa6HSKiRbw_nXtONOpf";
+
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get("id");
+
+            if (!id || typeof BloomShare === "undefined") {
                 target.innerHTML =
                     '<p class="bouquet-placeholder">This bouquet link looks incomplete ♡</p>';
                 return;
             }
 
-            const recipe = BloomShare.decode(code);
-            if (!recipe) {
-                target.innerHTML =
-                    '<p class="bouquet-placeholder">Couldn\'t open this bouquet link ♡</p>';
-                return;
-            }
+            try {
+                const response = await fetch(
+                    `${SUPABASE_URL}/rest/v1/bouquets?id=eq.${encodeURIComponent(id)}&select=recipe`,
+                    {
+                        method: "GET",
+                        headers: {
+                            "apikey": SUPABASE_KEY,
+                            "Authorization": `Bearer ${SUPABASE_KEY}`
+                        }
+                    }
+                );
 
-            BloomShare.renderInto(target, recipe);
+                if (!response.ok) {
+                    throw new Error("Could not retrieve bouquet.");
+                }
+
+                const data = await response.json();
+
+                if (!data || data.length === 0 || !data[0].recipe) {
+                    target.innerHTML =
+                        '<p class="bouquet-placeholder">This bouquet could not be found ♡</p>';
+                    return;
+                }
+
+                BloomShare.renderInto(target, data[0].recipe);
+
+            } catch (error) {
+                console.error("Bouquet loading error:", error);
+
+                target.innerHTML =
+                    '<p class="bouquet-placeholder">Something went wrong while opening this bouquet. Please try again ♡</p>';
+            }
         })();
     </script>
 </body>
