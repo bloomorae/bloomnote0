@@ -162,7 +162,7 @@
             back.style.top = `${cy}px`;
             scene.appendChild(back);
 
-            const front = makeWrapperDiv(colors, wrapW, wrapH, wTransform, 5, "vf", wrapperFrontMarkup(colors));
+            const front = makeWrapperDiv(colors, wrapW, wrapH, wTransform, 5000, "vf", wrapperFrontMarkup(colors));
             front.style.left = `${cx}px`;
             front.style.top = `${cy}px`;
             scene.appendChild(front);
