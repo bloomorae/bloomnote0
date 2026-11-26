@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Little Messages | Bloomnote</title>
+
+    <link rel="stylesheet" href="arrangement.css">
+    <link rel="stylesheet" href="message.css">
+</head>
+
+<body>
+
+<header class="topbar">
+    <a href="index.html" class="logo">bloom<span>note</span></a>
+    <p>A little note for someone special</p>
+</header>
+
+<main>
+    <section class="intro">
+        <p class="eyebrow">THE LITTLE DETAILS</p>
+        <h1>Add a little message</h1>
+        <p>Choose a tiny letter to accompany your bouquet.</p>
+    </section>
+
+    <section class="message-layout">
+
+        <div class="bouquet-side">
+            <h2>Your bouquet</h2>
+            <p class="side-subtitle">A little creation made by you.</p>
+
+            <div class="bouquet-preview" id="bouquet-preview">
+                <div class="bouquet-placeholder" id="bouquet-placeholder">
+                    Your beautiful bouquet will appear here ♡
+                </div>
+            </div>
+        </div>
+
+        <div class="notes-side">
+            <h2>Choose your little letter</h2>
+            <p class="side-subtitle">Find the words that feel just right.</p>
+
+            <div class="message-grid" id="message-grid"></div>
+
+            <div class="selected-message">
+                <p class="selected-label">YOUR SELECTED MESSAGE</p>
+                <div class="letter-preview" id="letter-preview">
+                    <p>Select a little letter to see its message ♡</p>
+                </div>
+
+                <button id="attach-button" disabled>
+                    Attach to bouquet ♡
+                </button>
+            </div>
+        </div>
+
+    </section>
+
+    <footer class="bottom-bar">
+        <a href="arrangement.html" class="back-link">← Back to arrangement</a>
+
+        <div class="bottom-right">
+            <span id="selection-status">No message selected</span>
+            <button id="continue-button" disabled>Continue →</button>
+        </div>
+    </footer>
+</main>
+
+<script src="message.js"></script>
+</body>
+</html>

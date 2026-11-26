@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Bouquet For You | Bloomnote</title>
+    <link rel="stylesheet" href="final.css">
+    <style>
+        .view-actions {
+            margin: 28px auto 12px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .create-own-btn {
+            display: inline-block;
+            background: #b87983;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 15px 28px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-family: Arial, sans-serif;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .create-own-btn:hover {
+            background: #a76572;
+            transform: translateY(-2px);
+        }
+
+        .view-site-caption {
+            font-size: 13px;
+            color: #a17f78;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <a href="index.html" class="logo">bloom<span>note</span></a>
+        <p>A little something made with feeling.</p>
+    </header>
+
+    <main class="final-main">
+        <section class="final-intro">
+            <p class="eyebrow">SENT WITH LOVE</p>
+            <h1>A little bouquet, <em>just for you.</em></h1>
+            <p>Someone picked these blooms and a note especially for you.</p>
+        </section>
+
+        <section class="final-content">
+            <div class="final-bouquet-section">
+                <div id="shared-bouquet-display" class="final-bouquet">
+                    <p class="bouquet-placeholder">Loading your bouquet ♡</p>
+                </div>
+            </div>
+
+            <div class="view-actions">
+                <a href="index.html" class="create-own-btn">Make your own bouquet on Bloomnote →</a>
+                <p class="view-site-caption">Want to send a bouquet with a note to someone else? Try Bloomnote.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="final-footer">
+        Made with a little love by bloomnote ♡
+        <br>
+        Created by Pari ♡
+        <br>
+        © 2026 Bloomnote
+    </footer>
+
+    <script src="arrangement.js"></script>
+    <script src="bouquet-render.js"></script>
+    <script>
+        (function () {
+            const target = document.getElementById("shared-bouquet-display");
+            const params = new URLSearchParams(window.location.search);
+            const code = params.get("b");
+
+            if (!code || typeof BloomShare === "undefined") {
+                target.innerHTML =
+                    '<p class="bouquet-placeholder">This bouquet link looks incomplete ♡</p>';
+                return;
+            }
+
+            const recipe = BloomShare.decode(code);
+            if (!recipe) {
+                target.innerHTML =
+                    '<p class="bouquet-placeholder">Couldn\'t open this bouquet link ♡</p>';
+                return;
+            }
+
+            BloomShare.renderInto(target, recipe);
+        })();
+    </script>
+</body>
+</html>

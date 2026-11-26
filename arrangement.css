@@ -1,0 +1,567 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #fbf4f0;
+    color: #604b46;
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.topbar {
+    height: 75px;
+    padding: 0 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fffaf7;
+    border-bottom: 1px solid #eadbd3;
+}
+
+.logo {
+    font-size: 28px;
+    text-decoration: none;
+    color: #795b58;
+    letter-spacing: -1px;
+}
+
+.logo span {
+    color: #bd8588;
+}
+
+.topbar p {
+    font-size: 13px;
+    color: #a38b82;
+    font-style: italic;
+}
+
+main {
+    max-width: 1450px;
+    margin: auto;
+    padding: 45px 5% 30px;
+}
+
+.intro {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.eyebrow {
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #b17e80;
+    margin-bottom: 12px;
+}
+
+.intro h1 {
+    font-size: clamp(30px, 4vw, 43px);
+    font-weight: normal;
+    color: #745653;
+    margin-bottom: 10px;
+}
+
+.intro > p:last-child {
+    font-size: 14px;
+    color: #a58c83;
+}
+
+.studio {
+    display: grid;
+    grid-template-columns: 290px minmax(0, 1fr);
+    gap: 25px;
+    align-items: start;
+}
+
+.selection-panel {
+    background: #fffaf7;
+    border: 1px solid #eddfd7;
+    border-radius: 15px;
+    padding: 25px 20px;
+    max-height: 760px;
+    overflow-y: auto;
+}
+
+.selection-panel h2,
+.workspace-heading h2 {
+    font-size: 21px;
+    font-weight: normal;
+    color: #765653;
+}
+
+.subtitle {
+    font-size: 12px;
+    color: #ad9690;
+    margin: 7px 0 25px;
+}
+
+.selection-section {
+    padding: 18px 0;
+    border-top: 1px solid #efdfd8;
+}
+
+.selection-section h3 {
+    font-size: 15px;
+    font-weight: normal;
+    color: #85635e;
+    margin-bottom: 13px;
+}
+
+.selection-section h3 span {
+    color: #b38a83;
+}
+
+.selection-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f3e9e4;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+}
+
+.selection-item button {
+    display: none;
+}
+
+.empty-selection {
+    font-size: 12px;
+    color: #b5a29a;
+    font-style: italic;
+    line-height: 1.6;
+}
+
+
+/* ---------- SIDE TABLE ITEMS (drag these onto the canvas) ---------- */
+
+.tray-item {
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 8px 6px;
+    border-radius: 12px;
+    border-bottom: none;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+    transition: background 0.2s;
+}
+
+.tray-item:hover {
+    background: #fbefea;
+}
+
+.tray-item:active {
+    cursor: grabbing;
+}
+
+.tray-item.used {
+    opacity: 0.45;
+    cursor: default;
+}
+
+.tray-item.used:hover {
+    background: transparent;
+}
+
+.tray-thumb {
+    width: 58px;
+    height: 58px;
+    flex-shrink: 0;
+    object-fit: contain;
+    background: #fffdfb;
+    border: 1px solid #f1e4dd;
+    border-radius: 12px;
+    pointer-events: none;
+    -webkit-user-drag: none;
+}
+
+.tray-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.tray-name {
+    font-size: 12.5px;
+    color: #765653;
+    line-height: 1.3;
+}
+
+.tray-count {
+    font-size: 11px;
+    color: #ad9690;
+}
+
+.wrapper-card-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 6px;
+    border-radius: 12px;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.wrapper-card-row:hover {
+    background: #fbefea;
+}
+
+.wrapper-thumb {
+    width: 76px;
+    flex-shrink: 0;
+    pointer-events: none;
+}
+
+.wrapper-thumb svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+/* ---------- WORKSPACE ---------- */
+
+.workspace {
+    min-width: 0;
+}
+
+.workspace-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 17px;
+}
+
+.workspace-heading p {
+    font-size: 12px;
+    color: #a58c83;
+    margin-top: 6px;
+}
+
+.clear-button {
+    border: 1px solid #dfc8c0;
+    background: transparent;
+    border-radius: 30px;
+    padding: 9px 15px;
+    color: #987570;
+    cursor: pointer;
+}
+
+.clear-button:hover {
+    background: #f2e4df;
+}
+
+.bouquet-canvas {
+    height: 570px;
+    background-color: #fffaf7;
+    background-image: radial-gradient(
+        #e8d8d0 0.7px,
+        transparent 0.7px
+    );
+    background-size: 19px 19px;
+    border: 1px solid #eadbd3;
+    border-radius: 17px;
+    position: relative;
+    overflow: hidden;
+    touch-action: none;
+    user-select: none;
+}
+
+.bouquet-canvas.drop-ready {
+    border-color: #d6aaa3;
+    box-shadow: inset 0 0 0 2px rgba(214, 170, 163, 0.5);
+}
+
+.canvas-hint {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 42%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    pointer-events: none;
+    padding: 0 20px;
+}
+
+.canvas-hint span {
+    font-size: 48px;
+    color: #d6b1a9;
+    margin-bottom: 12px;
+}
+
+.canvas-hint h3 {
+    color: #98736d;
+    font-weight: normal;
+    font-size: 19px;
+}
+
+.canvas-hint p {
+    color: #b29a92;
+    font-size: 12px;
+    margin-top: 9px;
+}
+
+.canvas-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+}
+
+.canvas-controls > span {
+    color: #ae9289;
+    font-size: 12px;
+}
+
+.transform-controls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.transform-controls button {
+    width: 36px;
+    height: 36px;
+    border: 1px solid #dfc8c0;
+    background: #fffaf7;
+    border-radius: 50%;
+    color: #987570;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.transform-controls button:hover:not(:disabled) {
+    background: #f2e4df;
+    transform: translateY(-2px);
+}
+
+.transform-controls button:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.transform-controls button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.canvas-note {
+    text-align: center;
+    color: #ae9289;
+    font-size: 12px;
+    margin-top: 14px;
+}
+
+
+/* ---------- FLOWERS AND LEAVES ON THE CANVAS ---------- */
+
+.bouquet-piece {
+    position: absolute;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+    transform-origin: center;
+}
+
+.bouquet-piece img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.bouquet-piece.dragging {
+    cursor: grabbing;
+}
+
+/* the picture that follows your finger while you drag from the side table */
+.drag-ghost {
+    position: fixed;
+    transform: translate(-50%, -50%);
+    opacity: 0.9;
+    pointer-events: none;
+    z-index: 9999;
+    filter: drop-shadow(0 6px 10px rgba(110, 70, 70, 0.25));
+}
+
+
+/* ---------- SELECTION BOX AND HANDLES ---------- */
+
+.selection-box {
+    position: absolute;
+    display: none;
+    border: 1.5px dashed #bd8588;
+    border-radius: 10px;
+    pointer-events: none;
+    transform-origin: center;
+    z-index: 6000;
+}
+
+.selection-box.visible {
+    display: block;
+}
+
+.sel-handle {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #fffaf7;
+    border: 1px solid #bd8588;
+    color: #9a6a6a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(120, 80, 80, 0.2);
+    pointer-events: auto;
+    touch-action: none;
+    user-select: none;
+    transition: background 0.15s, transform 0.15s;
+}
+
+.sel-handle:hover {
+    background: #f6e6e2;
+}
+
+.sel-rotate {
+    left: 50%;
+    top: -44px;
+    margin-left: -14px;
+    cursor: grab;
+}
+
+/* little line joining the rotate handle to the box */
+.sel-rotate::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    width: 1px;
+    height: 16px;
+    background: #bd8588;
+}
+
+.sel-resize {
+    right: -14px;
+    bottom: -14px;
+    cursor: nwse-resize;
+}
+
+.sel-delete {
+    right: -14px;
+    top: -14px;
+    cursor: pointer;
+}
+
+.selection-box.wrapper-mode .sel-delete {
+    display: none;
+}
+
+
+/* ---------- BOTTOM BAR ---------- */
+
+.bottom-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 35px;
+    padding: 20px 0;
+    border-top: 1px solid #e9d8d0;
+    gap: 15px;
+}
+
+.back-link {
+    color: #98756e;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.bottom-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#arrangement-count {
+    color: #a58c83;
+    font-size: 12px;
+}
+
+#continue-button {
+    border: none;
+    background: #ad7c7b;
+    color: white;
+    padding: 14px 30px;
+    border-radius: 30px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#continue-button:hover:not(:disabled) {
+    background: #916665;
+    transform: translateY(-2px);
+}
+
+#continue-button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+@media (max-width: 800px) {
+    main {
+        padding: 30px 5%;
+    }
+
+    .studio {
+        grid-template-columns: 1fr;
+    }
+
+    .selection-panel {
+        order: 2;
+        max-height: none;
+    }
+
+    .workspace {
+        order: 1;
+    }
+
+    .bouquet-canvas {
+        height: 450px;
+    }
+}
+
+@media (max-width: 480px) {
+    .topbar {
+        padding: 0 5%;
+    }
+
+    .topbar p {
+        font-size: 11px;
+    }
+
+    .bottom-bar {
+        align-items: flex-start;
+    }
+
+    .bottom-right {
+        align-items: flex-end;
+        flex-direction: column;
+        gap: 10px;
+    }
+}

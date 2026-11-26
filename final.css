@@ -1,0 +1,164 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #fbf3ef;
+    color: #745650;
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.final-main {
+    max-width: 1200px;
+    margin: auto;
+    padding: 45px 30px 25px;
+}
+
+.final-intro {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.eyebrow {
+    color: #bd7d83;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+}
+
+.final-intro h1 {
+    margin: 15px 0;
+    color: #745650;
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: normal;
+}
+
+.final-intro > p:last-child {
+    color: #a17f78;
+    font-size: 15px;
+}
+
+.final-content {
+    max-width: 850px;
+    margin: auto;
+}
+
+.final-bouquet-section {
+    text-align: center;
+}
+
+.final-bouquet-section h2 {
+    font-size: 25px;
+    font-weight: normal;
+}
+
+.final-subtitle {
+    margin-bottom: 22px;
+    color: #a17f78;
+    font-size: 14px;
+}
+
+.final-bouquet {
+    position: relative;
+    width: 100%;
+    min-height: 560px;
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    border: 1px solid #efdfd8;
+    border-radius: 16px;
+
+    background-color: #fff8f4;
+    background-image: radial-gradient(
+        #eadbd4 1px,
+        transparent 1px
+    );
+    background-size: 13px 13px;
+}
+
+.final-bouquet .bq-snapshot {
+    flex-shrink: 0;
+    max-width: none;
+}
+
+.bouquet-placeholder {
+    color: #a17f78;
+    font-style: italic;
+}
+
+/* Keep the attached note styled like the message page */
+.final-bouquet .attached-note {
+    z-index: 10;
+}
+
+.final-actions {
+    margin: 30px auto 0;
+    max-width: 400px;
+    text-align: center;
+}
+
+#generate-link-button {
+    width: 100%;
+    padding: 16px 20px;
+
+    border: none;
+    border-radius: 30px;
+
+    background: #b87983;
+    color: white;
+
+    font-size: 15px;
+    cursor: pointer;
+
+    transition: background 0.2s, transform 0.2s;
+}
+
+#generate-link-button:hover {
+    background: #a76572;
+    transform: translateY(-2px);
+}
+
+#generate-link-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+#link-status {
+    min-height: 35px;
+    margin-top: 15px;
+
+    color: #a17f78;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.final-footer {
+    margin-top: 45px;
+    padding: 24px 10px;
+
+    border-top: 1px solid #eadbd4;
+
+    color: #a17f78;
+    text-align: center;
+    font-size: 13px;
+}
+
+@media (max-width: 650px) {
+
+    .final-main {
+        padding: 30px 15px;
+    }
+
+    .final-bouquet {
+        min-height: 400px;
+        padding: 10px;
+    }
+
+}

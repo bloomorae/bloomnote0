@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose your flowers | Bloomnote</title>
+    <link rel="stylesheet" href="collection.css">
+</head>
+<body>
+
+    <header class="topbar">
+        <a href="index.html" class="logo">bloomnote<span>✿</span></a>
+        <a href="index.html" class="back-link">← Home</a>
+    </header>
+
+    <main>
+        <section class="intro">
+            <p class="eyebrow">A GARDEN FULL OF FEELINGS</p>
+            <h1>Pick your <em>flowers.</em></h1>
+            <p>Choose every little bloom you'd like to send.</p>
+        </section>
+
+        <section class="collection">
+            <div class="section-heading">
+                <h2>Flower collection</h2>
+                <span id="flower-count">20 flowers</span>
+            </div>
+
+            <div class="categories" id="categories"></div>
+
+            <div class="flower-grid" id="flower-grid"></div>
+        </section>
+    </main>
+
+    <footer class="selection-bar">
+        <div>
+            <p class="selection-label">YOUR FLOWER SELECTION</p>
+            <p class="selection-total">
+                <span id="total-count">0</span> flowers selected
+            </p>
+        </div>
+
+        <button id="continue-button" disabled>
+            Continue →
+        </button>
+    </footer>
+
+    <script src="collection.js"></script>
+</body>
+</html>

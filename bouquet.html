@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bloomnote | Choose Your Bouquet</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #fbf5f1;
+      color: #604b48;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .page {
+      width: min(1120px, 92%);
+      margin: auto;
+      padding: 45px 0 60px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .brand {
+      color: #ad7779;
+      font-family: 'Playfair Display', serif;
+      font-size: 27px;
+      letter-spacing: 2px;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      color: #b98583;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      color: #755653;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 5vw, 46px);
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      color: #987e78;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .bouquet-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+      margin-top: 38px;
+    }
+
+    .bouquet-card {
+      background: #fffaf7;
+      border: 1px solid #f0e2dc;
+      border-radius: 15px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: .25s ease;
+    }
+
+    .bouquet-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px #9d77751a;
+    }
+
+    .bouquet-card.selected {
+      border: 2px solid #bd8587;
+      background: #fff4f1;
+      box-shadow: 0 7px 20px #b9858320;
+    }
+
+    .artwork {
+      height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      background: #f8eeea;
+    }
+
+    .artwork svg {
+      width: 100%;
+      height: 100%;
+      max-width: 300px;
+    }
+
+    .card-info {
+      padding: 17px 18px 20px;
+      text-align: center;
+    }
+
+    .card-info h2 {
+      color: #765a56;
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .card-info p {
+      color: #a18a82;
+      font-size: 12px;
+    }
+
+    .selection {
+      text-align: center;
+      margin-top: 30px;
+      color: #987b76;
+      font-size: 13px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 13px;
+      margin-top: 25px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 30px;
+      padding: 13px 30px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .back-btn {
+      color: #956e6e;
+      background: #f1e3df;
+    }
+
+    .continue-btn {
+      color: white;
+      background: #b98284;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(.97);
+    }
+
+    @media (max-width: 800px) {
+      .bouquet-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 520px) {
+      .bouquet-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .artwork {
+        height: 280px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <header>
+      <div class="brand">bloomnote</div>
+      <p class="eyebrow">A little more magic</p>
+      <h1>Choose your bouquet</h1>
+      <p class="subtitle">
+        Every bouquet tells a different story.
+        Pick the one that feels like yours.
+      </p>
+    </header>
+
+    <section class="bouquet-grid" id="bouquet-grid"></section>
+
+    <p class="selection" id="selection-text">
+      Choose one bouquet to continue.
+    </p>
+
+    <div class="actions">
+      <button class="btn back-btn" id="back-button">Back to greenery</button>
+      <button class="btn continue-btn" id="continue-button" onclick="window.location.href='arrangement.html'">
+        Continue →
+      </button>
+    </div>
+  </main>
+
+  <script src="bouquet.js" defer></script>
+</body>
+</html>

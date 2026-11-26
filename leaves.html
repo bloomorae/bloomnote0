@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose your greenery | Bloomnote</title>
+    <link rel="stylesheet" href="leaves.css">
+</head>
+<body>
+
+    <header class="topbar">
+        <a href="index.html" class="logo">bloomnote<span>✿</span></a>
+        <a href="collection.html" class="back-link">← Back to flowers</a>
+    </header>
+
+    <main>
+        <section class="intro">
+            <p class="eyebrow">THE LITTLE DETAILS</p>
+            <h1>A little <em>greenery.</em></h1>
+            <p>Choose the leaves and little branches that will bring your bouquet to life.</p>
+            <p class="flower-summary" id="flower-summary">
+                Your flowers are waiting for their greenery.
+            </p>
+        </section>
+
+        <section class="collection">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">A TOUCH OF GREEN</p>
+                    <h2>Choose your leaves</h2>
+                </div>
+                <span id="leaf-count">25 varieties</span>
+            </div>
+
+            <div class="categories" id="categories"></div>
+
+            <div class="leaf-grid" id="leaf-grid"></div>
+        </section>
+    </main>
+
+    <footer class="selection-bar">
+        <div>
+            <p class="selection-label">YOUR GREENERY SELECTION</p>
+            <p class="selection-total">
+                <span id="total-count">0</span> leaves selected
+            </p>
+        </div>
+        <button id="continue-button" disabled>
+            Continue →
+        </button>
+    </footer>
+
+    <script src="leaves.js"></script>
+
+    <script>
+        document.getElementById("continue-button").addEventListener("click", function () {
+            if (!this.disabled) {
+                window.location.href = "bouquet.html";
+            }
+        });
+    </script>
+</body>
+</html>

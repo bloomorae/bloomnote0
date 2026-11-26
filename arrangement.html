@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arrange Your Bouquet | Bloomnote</title>
+    <link rel="stylesheet" href="arrangement.css">
+</head>
+
+<body>
+
+    <header class="topbar">
+        <a href="collection.html" class="logo">bloomnote<span>.</span></a>
+        <p>Flowers, made with feeling.</p>
+    </header>
+
+    <main>
+
+        <section class="intro">
+            <p class="eyebrow">THE CREATIVE STUDIO</p>
+            <h1>Let's arrange your bouquet.</h1>
+            <p>Bring your favourite flowers together and create something beautiful.</p>
+        </section>
+
+        <section class="studio">
+
+            <aside class="selection-panel">
+
+                <h2>Your selections</h2>
+                <p class="subtitle">Drag them onto your bouquet canvas</p>
+
+                <div class="selection-section">
+                    <h3>Flowers <span>✿</span></h3>
+                    <div id="flower-list"></div>
+                </div>
+
+                <div class="selection-section">
+                    <h3>Greenery <span>❧</span></h3>
+                    <div id="leaf-list"></div>
+                </div>
+
+                <div class="selection-section">
+                    <h3>Bouquet wrapper <span>❀</span></h3>
+                    <div id="wrapper-card"></div>
+                </div>
+
+            </aside>
+
+            <section class="workspace">
+
+                <div class="workspace-heading">
+                    <div>
+                        <h2>Your bouquet canvas</h2>
+                        <p>Arrange your selected flowers and greenery.</p>
+                    </div>
+
+                    <button id="clear-button" class="clear-button">
+                        Reset arrangement
+                    </button>
+                </div>
+
+                <div id="bouquet-canvas" class="bouquet-canvas">
+
+                    <div class="canvas-hint" id="canvas-hint">
+                        <span>✿</span>
+                        <h3>Your bouquet begins here</h3>
+                        <p>Drag your flowers and greenery from the left onto the canvas.</p>
+                    </div>
+
+                </div>
+
+                <div class="canvas-controls">
+                    <span id="selection-hint">✧ Select a flower or leaf to edit it</span>
+
+                    <div class="transform-controls">
+                        <button id="rotate-left" type="button" title="Rotate left" disabled>↶</button>
+                        <button id="rotate-right" type="button" title="Rotate right" disabled>↷</button>
+                        <button id="make-smaller" type="button" title="Make smaller" disabled>−</button>
+                        <button id="make-bigger" type="button" title="Make bigger" disabled>+</button>
+                        <button id="layer-back" type="button" title="Send backward" disabled>⇩</button>
+                        <button id="layer-forward" type="button" title="Bring forward" disabled>⇧</button>
+                        <button id="delete-piece" type="button" title="Take out of the bouquet" disabled>✕</button>
+                    </div>
+                </div>
+
+                <p class="canvas-note">
+                    ✧ Drag to move · Use the handles to rotate or resize · Slide a flower down into the wrapper to tuck it in
+                </p>
+
+            </section>
+
+        </section>
+
+        <footer class="bottom-bar">
+
+            <a href="leaves.html" class="back-link">
+                ← Back to greenery
+            </a>
+
+            <div class="bottom-right">
+                <span id="arrangement-count">0 pieces arranged</span>
+                <button id="continue-button" disabled>
+                    Continue →
+                </button>
+            </div>
+
+        </footer>
+
+    </main>
+
+    <script src="arrangement.js"></script>
+
+</body>
+</html>
