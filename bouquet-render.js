@@ -75,11 +75,11 @@
         `;
     }
 
-    function makeWrapperDiv(colors, transformStr, zIndex, idPrefix, extraMarkup) {
+    function makeWrapperDiv(colors, wrapW, wrapH, transformStr, zIndex, idPrefix, extraMarkup) {
         const div = document.createElement("div");
         div.style.position = "absolute";
-        div.style.width = "min(78%, 300px)";
-        div.style.aspectRatio = "300 / 310";
+        div.style.width = `${wrapW}px`;
+        div.style.height = `${wrapH}px`;
         div.style.transform = transformStr;
         div.style.transformOrigin = "center center";
         div.style.zIndex = String(zIndex);
@@ -91,6 +91,17 @@
             </svg>
         `;
         return div;
+    }
+
+    function fitSnapshot(container, frame, scene, width, height, offsetX, offsetY) {
+        const maxHeight = 520;
+        const available = Math.max(container.clientWidth - 50, 260);
+        let scale = Math.min(available / width, maxHeight / height, 1.6);
+
+        frame.style.width = `${width * scale}px`;
+        frame.style.height = `${height * scale}px`;
+        scene.style.transformOrigin = "0 0";
+        scene.style.transform = `scale(${scale}) translate(${-offsetX}px, ${-offsetY}px)`;
     }
 
     function renderInto(container, recipe) {
@@ -106,34 +117,55 @@
         const cw = Number(recipe.cw) || 900;
         const ch = Number(recipe.ch) || 570;
 
-        const stage = document.createElement("div");
-        stage.style.position = "relative";
-        stage.style.width = "100%";
-        stage.style.maxWidth = `${cw}px`;
-        stage.style.aspectRatio = `${cw} / ${ch}`;
-        stage.style.margin = "0 auto";
-        stage.style.overflow = "hidden";
-        stage.style.borderRadius = "14px";
+        const frame = document.createElement("div");
+        frame.className = "bq-snapshot";
+        frame.style.position = "relative";
+        frame.style.overflow = "hidden";
+
+        const scene = document.createElement("div");
+        scene.className = "bq-scene";
+        scene.style.position = "relative";
+        scene.style.width = `${cw}px`;
+        scene.style.height = `${ch}px`;
 
         const wrapW = Math.min(cw * 0.78, 300);
+        const wrapH = wrapW * (310 / 300);
         const unit = wrapW / 300;
+
+        let minX = Infinity;
+        let minY = Infinity;
+        let maxX = -Infinity;
+        let maxY = -Infinity;
+
+        function includeBox(cx, cy, w, h) {
+            minX = Math.min(minX, cx - w / 2);
+            maxX = Math.max(maxX, cx + w / 2);
+            minY = Math.min(minY, cy - h / 2);
+            maxY = Math.max(maxY, cy + h / 2);
+        }
+
         const colors = Array.isArray(recipe.c) && recipe.c.length >= 3
             ? recipe.c.map(hex => (String(hex).startsWith("#") ? String(hex) : `#${hex}`))
             : null;
 
         if (colors && Array.isArray(recipe.w)) {
             const [wx, wy, wRot, wScale] = recipe.w;
-            const wTransform = `translate(-50%, -50%) rotate(${Number(wRot) || 0}deg) scale(${Number(wScale) || 1})`;
+            const wSc = Number(wScale) || 1;
+            const wTransform = `translate(-50%, -50%) rotate(${Number(wRot) || 0}deg) scale(${wSc})`;
+            const cx = ((Number(wx) || 50) / 100) * cw;
+            const cy = ((Number(wy) || 70) / 100) * ch;
 
-            const back = makeWrapperDiv(colors, wTransform, 1, "vb");
-            back.style.left = `${Number(wx) || 50}%`;
-            back.style.top = `${Number(wy) || 70}%`;
-            stage.appendChild(back);
+            includeBox(cx, cy, wrapW * wSc, wrapH * wSc);
 
-            const front = makeWrapperDiv(colors, wTransform, 5000, "vf", wrapperFrontMarkup(colors));
-            front.style.left = `${Number(wx) || 50}%`;
-            front.style.top = `${Number(wy) || 70}%`;
-            stage.appendChild(front);
+            const back = makeWrapperDiv(colors, wrapW, wrapH, wTransform, 1, "vb");
+            back.style.left = `${cx}px`;
+            back.style.top = `${cy}px`;
+            scene.appendChild(back);
+
+            const front = makeWrapperDiv(colors, wrapW, wrapH, wTransform, 5000, "vf", wrapperFrontMarkup(colors));
+            front.style.left = `${cx}px`;
+            front.style.top = `${cy}px`;
+            scene.appendChild(front);
         }
 
         const names = Array.isArray(recipe.n) ? recipe.n : [];
@@ -146,11 +178,15 @@
             const pieceType = typeNum === 1 ? "leaf" : "flower";
             const sc = Number(scale) || 1;
             const size = (baseSizes[pieceType] || 84) * sc * unit;
+            const cx = ((Number(x) || 50) / 100) * cw;
+            const cy = ((Number(y) || 50) / 100) * ch;
+
+            includeBox(cx, cy, size, size);
 
             const pieceEl = document.createElement("div");
             pieceEl.style.position = "absolute";
-            pieceEl.style.left = `${Number(x) || 50}%`;
-            pieceEl.style.top = `${Number(y) || 50}%`;
+            pieceEl.style.left = `${cx}px`;
+            pieceEl.style.top = `${cy}px`;
             pieceEl.style.width = `${size}px`;
             pieceEl.style.height = `${size}px`;
             pieceEl.style.transform = `translate(-50%, -50%) rotate(${Number(rot) || 0}deg)`;
@@ -170,19 +206,30 @@
             }
 
             pieceEl.appendChild(img);
-            stage.appendChild(pieceEl);
+            scene.appendChild(pieceEl);
         });
+
+        const pad = 24;
+        const offsetX = Number.isFinite(minX) ? Math.max(0, minX - pad) : 0;
+        const offsetY = Number.isFinite(minY) ? Math.max(0, minY - pad) : 0;
+        const cropW = Number.isFinite(maxX) ? Math.min(cw - offsetX, maxX - offsetX + pad) : cw;
+        const cropH = Number.isFinite(maxY) ? Math.min(ch - offsetY, maxY - offsetY + pad) : ch;
+
+        frame.appendChild(scene);
+        container.appendChild(frame);
 
         const note = document.createElement("div");
         note.className = "attached-note";
-        note.style.zIndex = "6000";
 
         const noteP = document.createElement("p");
         noteP.textContent = recipe.m || "A little happiness, just for you.";
         note.appendChild(noteP);
 
-        stage.appendChild(note);
-        container.appendChild(stage);
+        container.appendChild(note);
+
+        const applyFit = () => fitSnapshot(container, frame, scene, cropW, cropH, offsetX, offsetY);
+        applyFit();
+        window.addEventListener("resize", applyFit);
     }
 
     global.BloomShare = {
