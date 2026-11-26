@@ -75,23 +75,24 @@
         `;
     }
 
-    function makeWrapperDiv(colors, wrapW, wrapH, transformStr, zIndex, idPrefix, extraMarkup) {
-        const div = document.createElement("div");
-        div.style.position = "absolute";
-        div.style.width = `${wrapW}px`;
-        div.style.height = `${wrapH}px`;
-        div.style.transform = transformStr;
-        div.style.transformOrigin = "center center";
-        div.style.zIndex = String(zIndex);
-        div.style.pointerEvents = "none";
-        div.innerHTML = `
-            <svg viewBox="0 0 300 310" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-                ${wrapperBaseMarkup(colors, idPrefix)}
-                ${extraMarkup || ""}
-            </svg>
-        `;
-        return div;
-    }
+    function makeWrapperDiv(colors, wrapW, wrapH, transformStr, zIndex, markup) {
+    const div = document.createElement("div");
+    div.style.position = "absolute";
+    div.style.width = `${wrapW}px`;
+    div.style.height = `${wrapH}px`;
+    div.style.transform = transformStr;
+    div.style.transformOrigin = "center center";
+    div.style.zIndex = String(zIndex);
+    div.style.pointerEvents = "none";
+
+    div.innerHTML = `
+        <svg viewBox="0 0 300 310" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            ${markup}
+        </svg>
+    `;
+
+    return div;
+}
 
     function fitSnapshot(container, frame, scene, width, height, offsetX, offsetY) {
         const maxHeight = 520;
