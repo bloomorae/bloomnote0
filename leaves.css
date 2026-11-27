@@ -319,6 +319,23 @@ main {
     cursor: not-allowed;
 }
 
+/* Bloomnote creator footer */
+
+.creator-footer {
+    text-align: center;
+    padding: 27px 15px;
+    border-top: 1px solid #ead8d4;
+    background: var(--background);
+    color: var(--muted);
+    font-family: "Playfair Display", serif;
+    font-size: 14px;
+    line-height: 1.35;
+}
+
+.creator-footer p {
+    margin: 2px 0;
+}
+
 @media (max-width: 850px) {
     .leaf-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
