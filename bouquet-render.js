@@ -447,7 +447,9 @@
         }
     }
 
-    async function decode(code) {
+    // New ("p.") and plain links are read straight away.
+    // Only the older squashed ("z.") links need to wait a moment.
+    function decode(code) {
         if (!code) return null;
 
         try {
@@ -459,7 +461,10 @@
 
             if (text.startsWith("z.")) {
                 if (typeof DecompressionStream === "undefined") return null;
-                return JSON.parse(await decompress(base64UrlToBytes(text.slice(2))));
+
+                return decompress(base64UrlToBytes(text.slice(2)))
+                    .then(json => JSON.parse(json))
+                    .catch(() => null);
             }
 
             return JSON.parse(fromBase64Url(text));
@@ -586,6 +591,15 @@
 
     function renderInto(container, recipe) {
         if (!container) return;
+
+        // Works whether or not the page waited for decode() to finish
+        if (recipe && typeof recipe.then === "function") {
+            container.innerHTML =
+                '<p class="bouquet-placeholder">Loading your bouquet ♡</p>';
+            recipe.then(ready => renderInto(container, ready));
+            return;
+        }
+
         container.innerHTML = "";
 
         if (!recipe || !Array.isArray(recipe.p)) {
