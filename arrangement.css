@@ -1,3 +1,4 @@
+
 * {
     margin: 0;
     padding: 0;
@@ -522,6 +523,25 @@ main {
     opacity: 0.45;
     cursor: not-allowed;
 }
+
+
+/* ---------- CREATOR FOOTER ---------- */
+
+.creator-footer {
+    text-align: center;
+    padding: 27px 15px;
+    border-top: 1px solid #ead8d4;
+    background: #fbf4f0;
+    color: #987e78;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 14px;
+    line-height: 1.35;
+}
+
+.creator-footer p {
+    margin: 2px 0;
+}
+
 
 @media (max-width: 800px) {
     main {
