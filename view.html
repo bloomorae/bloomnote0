@@ -79,7 +79,7 @@
     <script src="arrangement.js"></script>
     <script src="bouquet-render.js"></script>
     <script>
-        (function () {
+        (async function () {
             const target = document.getElementById("shared-bouquet-display");
             const params = new URLSearchParams(window.location.search);
             const code = params.get("b");
@@ -90,7 +90,7 @@
                 return;
             }
 
-            const recipe = BloomShare.decode(code);
+            const recipe = await BloomShare.decode(code);
             if (!recipe) {
                 target.innerHTML =
                     '<p class="bouquet-placeholder">Couldn\'t open this bouquet link ♡</p>';
