@@ -1,3 +1,4 @@
+
 .message-layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
@@ -210,6 +211,25 @@
     font-size: 12px;
     color: #a58c83;
 }
+
+
+/* ---------- CREATOR FOOTER ---------- */
+
+.creator-footer {
+    text-align: center;
+    padding: 27px 15px;
+    border-top: 1px solid #ead8d4;
+    background: #fbf4f0;
+    color: #987e78;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 14px;
+    line-height: 1.35;
+}
+
+.creator-footer p {
+    margin: 2px 0;
+}
+
 
 @media (max-width: 850px) {
     .message-layout {
